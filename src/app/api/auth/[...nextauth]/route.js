@@ -1,4 +1,3 @@
-// /src/app/api/auth/[...nextauth]/route.js
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -18,20 +17,6 @@ export const authOptions = {
   ],
   secret: process.env.SECRET,
 
-  // callbacks: {
-  //   async session({ session, token }) {
-  //     session.user.id = token.sub;
-  //     return session;
-  //   },
-  //   async redirect({ url, baseUrl }) {
-  //     // If the redirect is for sign out, go to the main landing page
-  //     if (url === '/api/auth/signout') {
-  //       return baseUrl;  
-  //     }
-  //     // For all other redirects, stay within the app or go to dashboard if authenticated
-  //     return url.startsWith(baseUrl) ? url : `${baseUrl}/dashboard`;
-  //   },
-  // }
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account.provider === "google") {
