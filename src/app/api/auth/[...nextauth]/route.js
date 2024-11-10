@@ -19,23 +19,23 @@ export const authOptions = {
   secret: process.env.SECRET,
 
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (account.provider === "google") {
+    // async signIn({ user, account, profile }) {
+    //   if (account.provider === "google") {
         
-        try {
-          // Send a request to the Express API to save the user
-          await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
-            email: user.email,
-            name: user.name,
-            image: user.image,
-          });
-        } catch (error) {
-          console.error("Failed to save user:", error);
-        }
-        return true;
-      }
-      return false;
-    },
+    //     try {
+    //       // Send a request to the Express API to save the user
+    //       await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
+    //         email: user.email,
+    //         name: user.name,
+    //         image: user.image,
+    //       });
+    //     } catch (error) {
+    //       console.error("Failed to save user:", error);
+    //     }
+    //     return true;
+    //   }
+    //   return false;
+    // },
 
     async session({ session, token }) {
       session.user.id = token.sub;
