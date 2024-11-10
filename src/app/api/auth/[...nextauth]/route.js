@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+const axios = require("axios");
 
 export const authOptions = {
   providers: [
@@ -20,7 +21,17 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account.provider === "google") {
-        // You can add any custom logic here if needed
+        
+        try {
+          // Send a request to the Express API to save the user
+          await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
+            email: user.email,
+            name: user.name,
+            image: user.image,
+          });
+        } catch (error) {
+          console.error("Failed to save user:", error);
+        }
         return true;
       }
       return false;
