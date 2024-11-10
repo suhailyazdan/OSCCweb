@@ -24,20 +24,39 @@ export const authOptions = {
       return account.provider === "google";
     },
 
-    async jwt({ token, user, account }) {
-      // When user is defined (on first sign-in), store user info in token
-      if (account && user) {
-        token.email = user.email;
-        token.name = user.name;
-        token.image = user.image;
+    // async jwt({ token, user, account }) {
+    //   // When user is defined (on first sign-in), store user info in token
+    //   if (account && user) {
+    //     token.email = user.email;
+    //     token.name = user.name;
+    //     token.image = user.image;
 
+    //     try {
+    //       // Send a request to the Express API to save the user data
+    //       await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
+    //         email: user.email,
+    //         name: user.name,
+    //         image: user.image,
+    //       });
+    //     } catch (error) {
+    //       console.error("Failed to save user to MySQL:", error);
+    //     }
+    //   }
+    //   return token;
+    // },
+
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        console.log("User info to save:", user);  // Log user data
+    
         try {
           // Send a request to the Express API to save the user data
-          await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
+          const response = await axios.post("https://osc-cweb-backend.vercel.app/api/saveUser", {
             email: user.email,
             name: user.name,
             image: user.image,
           });
+          console.log("API response:", response.data);  // Log API response
         } catch (error) {
           console.error("Failed to save user to MySQL:", error);
         }
@@ -52,7 +71,7 @@ export const authOptions = {
       session.user.name = token.name;
       session.user.image = token.image;
       return session;
-    },
+    }
   }
 
 
